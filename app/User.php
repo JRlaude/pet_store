@@ -37,6 +37,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getName()
+    {
+      return "{$this->first_name} {$this->last_name}"; 
+    //  return auth()->user()->first_name . ' ' . auth()->user()->last_name; 
+    }
+    //    public function getRouteKeyName(){
+    //     return 'first_name';
+    // }
     public function carts(){
         return $this->hasMany(Cart::class);
        }

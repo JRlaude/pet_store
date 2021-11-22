@@ -12,4 +12,9 @@ class Pet extends Model
      public function reservations(){
          return $this->hasOne(Reservation::class);
         }
+
+        public function pet_category(){
+            return $this->belongsTo(Pet_category::class);
+            }
+            
 }

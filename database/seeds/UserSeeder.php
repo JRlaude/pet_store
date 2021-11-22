@@ -19,13 +19,15 @@ class UserSeeder extends Seeder
                 'first_name'=>'admin',
                 'last_name'=>'admin',
                 'email'=>'admin@gmail.com',
-                'password' => Hash::make('admin')
+                'password' => Hash::make('admin'),
+                'isAdmin' => 1
             ],
             [
                 'first_name'=>'user',
                 'last_name'=>'user',
                 'email'=>'user@gmail.com',
-                'password' => Hash::make('user')
+                'password' => Hash::make('user'),
+                'isAdmin' => 0
             ],
         ]);
     }
