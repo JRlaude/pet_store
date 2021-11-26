@@ -20,15 +20,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <style>
-        .form-control:focus {
-            color: #495057;
-            background-color: #fff;
-            border-color: #33ff00;
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgb(0 255 8 / 25%);
-        }
-    </style>
+    
     @yield('css')
 
 </head>
