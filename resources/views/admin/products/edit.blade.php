@@ -1,54 +1,93 @@
-@extends('layouts.app')
-@section('title', 'Edit Product')
+@extends('layouts.adminlte')
+
+@section('title', 'Dashboard | ')
+
+@section('pluginscss')
+
+@endsection
+
+@section('css')
+
+@endsection
+
+@section('content_header')
+
+@endsection
+
 @section('content')
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Edit Product</h3>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-edit"></i> Edit</h3>
+
+                <div class="card-tools">
+                    <div class="input-group input-group-sm">
+                        <a href="{{route('products.index')}}" class="btn btn-sm  btn-secondary float-right"> <i class="fas fa-arrow-circle-left"></i> Back</a>
+                    </div>
                 </div>
+            </div>
+            <form class="form-horizontal" action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                 <div class="card-body">
-                    <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        <div class="form-group">
-                            <label for="name">Name</label>
+                    @csrf
+                    @method('PUT')
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10">
                             <input type="text" class="form-control" name="name" value="{{ $product->name }}">
                         </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="description" class="col-sm-2 col-form-label">Description</label>
+                        <div class="col-sm-10">
                             <textarea class="form-control" name="description" rows="3">{{ $product->description }}</textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="price">Price</label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="price" class="col-sm-2 col-form-label">Price</label>
+                        <div class="col-sm-10">
                             <input type="number" class="form-control" name="price" value="{{ $product->price }}">
                         </div>
-                        <div class="form-group">
-                            <label for="image">Image</label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="image" class="col-sm-2 col-form-label">Image</label>
+                        <div class="col-sm-10">
                             <input type="file" class="form-control" name="image">
                         </div>
-                        <div class="form-group">
-                            <label for="category">Category</label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="category" class="col-sm-2 col-form-label">Category</label>
+                        <div class="col-sm-10">
                             <select class="form-control" name="category_id">
                                 @foreach($categories as $category)
                                 <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                                 @endforeach
                             </select>
-
                         </div>
-                        <div class="form-group">
-                            <label for="quantity">quantity</label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="quantity" class="col-sm-2 col-form-label">quantity</label>
+                        <div class="col-sm-10">
                             <input type="number" class="form-control" name="quantity" value="{{ $product->quantity }}">
                         </div>
-
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                
                 </div>
-            </div>
+            </form>
         </div>
+
     </div>
 </div>
 
-                            @endsection
+@endsection
+
+
+@section('pluginsjs')
+
+@endsection
+
+@section('js')
+
+@endsection

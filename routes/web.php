@@ -43,6 +43,7 @@ Route::resource('/messages', 'MessageController');
 
 Route::middleware('admin')->group(function () {
     Route::prefix('admin')->group(function () { 
+        Route::get('/', 'AdminController@index')->name('admin.index'); 
         Route::get('/dashboard', 'AdminController@index')->name('dashboard');
 
 
@@ -50,6 +51,7 @@ Route::middleware('admin')->group(function () {
         Route::resource('/products', 'ProductController');
         Route::resource('/petCategories', 'PetCategoryController');
         Route::resource('/pets', 'PetController');
+        Route::resource('/orders', 'OrderController');
     });
 });
 

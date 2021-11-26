@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -15,14 +16,14 @@ class ProductController extends Controller
         return view('admin.products.index', compact('products'));
     }
     public function getProducts()
-    { 
+    {
         $products = Product::all();
         return view('products.index', compact('products'));
     }
     public function create()
     {
         $categories = Category::all();
-        return view('admin.products.create', compact('categories')); 
+        return view('admin.products.create', compact('categories'));
     }
     public function store(Request $request)
     {
@@ -39,8 +40,9 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->description = $request->description;
         $product->category_id = $request->category_id;
-        $product->img = $request->img;
         $product->quantity = $request->quantity;
+        $product->img = $request->image->getClientOriginalName();
+        $request->image->storeAs('images/products', $product->img, 'public');
         $product->save();
         return redirect()->route('products.index');
     }
@@ -49,7 +51,7 @@ class ProductController extends Controller
     {
         //show data
         $product = Product::find($id);
-        return view('products.show', compact('product'));
+        return view('admin.products.show', compact('product'));
     }
 
     public function edit($id)
@@ -57,7 +59,7 @@ class ProductController extends Controller
         //edit data
         $product = Product::find($id);
         $categories = Category::all();
-        return view('products.edit', compact('product', 'categories'));
+        return view('admin.products.edit', compact('product', 'categories'));
     }
     public function update(Request $request, $id)
     {
@@ -65,18 +67,28 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->name = $request->name;
         $product->price = $request->price;
+        $product->description = $request->description;
+        $product->category_id = $request->category_id;
+        $product->quantity = $request->quantity;
+        if ($request->hasFile('image')) {
+            if ($product->img) {
+                Storage::delete('/public/images/products/' . $product->img);
+            }
+            $product->img = $request->image->getClientOriginalName();
+            $request->image->storeAs('images/products', $product->img, 'public');
+        }
         $product->save();
-        return redirect('/products');
+        return redirect()->route('products.index');
     }
     public function destroy($id)
     {
         //delete data
         $product = Product::find($id);
         $product->delete();
-        return redirect('/products');
+        return redirect()->route('products.index');
     }
 
- 
+
     // public function addToCart(Request $request, $id)
     // {
     //     $product = Product::find($id);
@@ -138,5 +150,5 @@ class ProductController extends Controller
     //     $pdf = PDF::loadView('admin.orders.invoice', compact('order'));
     //     return $pdf->download('invoice.pdf');
     // }
- 
+
 }

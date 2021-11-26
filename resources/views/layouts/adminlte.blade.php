@@ -1,9 +1,10 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 @include('layouts.head')
+
 </head>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
   <div class="wrapper">
 
     <!-- Navbar -->
@@ -90,13 +91,8 @@
 
       <!-- Main content -->
       <div class="content">
-        <div class="container-fluid">
-          <div class="row">
+        <div class="container-fluid"> 
             @yield('content')
-
-            <!-- /.col-md-6 -->
-          </div>
-          <!-- /.row -->
         </div><!-- /.container-fluid -->
       </div>
       <!-- /.content -->

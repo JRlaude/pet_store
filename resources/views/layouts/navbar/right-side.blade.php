@@ -124,6 +124,7 @@
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-right">
+                                <li><a class="dropdown-item" href="{{route('dashboard')}}">Admin Dashboard</a></li>
                                 <li><a class="dropdown-item" href="{{route('profile')}}">Profile</a></li>
                                 <li><a class="dropdown-item" href="#!">Settings</a></li>
                                 <li><a class="dropdown-item" href="#!">Order</a></li>

@@ -23,11 +23,13 @@
 
 
     <!-- Adminlte 3 -->
-     
     <!-- font awesome -->
     <link href="{{ asset('AdminLTE-3.1.0/plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    @yield('pluginscss')
+
+
     <!-- Theme Styles -->
     <link href="{{ asset('AdminLTE-3.1.0/dist/css/adminlte.min.css') }}" rel="stylesheet">
-
+    @yield('css')
 
 </head>
