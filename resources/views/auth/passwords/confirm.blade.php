@@ -9,7 +9,7 @@
         <div class="col-md-8">
             <div class="card card-primary card-outline rounded-lg">
                 <div class="card-header text-center rounded-lg">
-                    <h2 class="card-title text-uppercase mx-auto mb-0" id="">{{ __('Confirm Password') }}</h2>
+                    <h2 class="text-uppercase mb-0" id="">{{ __('Confirm Password') }}</h2>
                 </div>
                 <div class="card-body" style="padding: 0 !important;">
                     {{ __('Please confirm your password before continuing.') }}

@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card card-primary card-outline rounded-lg">
                 <div class="card-header text-center rounded-lg">
-                    <h2 class="card-title text-uppercase mx-auto mb-0" id="">{{ __('Register') }}</h2>
+                    <h2 class="text-uppercase mb-0" id="">{{ __('Register') }}</h2>
                 </div>
                 <div class="card-body p-0">
                     <form class="mx-3 p-3" method="POST" action="{{ route('register') }}">
