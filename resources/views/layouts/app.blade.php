@@ -25,10 +25,10 @@
                     <!-- Right Side Of Navbar -->
                     @include('layouts.navbar.right-side')
                 </div>
-            </div>
+            </div>            
         </nav>
 
-
+        
         <main class="py-4">
             @yield('content')
         </main>
