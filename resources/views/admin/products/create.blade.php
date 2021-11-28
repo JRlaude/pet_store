@@ -1,17 +1,24 @@
-@extends('layouts.app')
-@section('title', 'Add Product')
+@extends('layouts.adminlte')
+@section('title', 'Add Product |')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Add Product</div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
-                            <div class="col-md-6">
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-edit"></i>Add Product</h3>
+                <div class="card-tools">
+                    <div class="input-group input-group-sm">
+                        <a href="{{route('products.index')}}" class="btn btn-sm  btn-secondary float-right"> <i class="fas fa-arrow-circle-left"></i> Back</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-12 col-sm-8">
+                            <div class="form-group">
+                                <label for="name">Name</label>
                                 <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
                                 @if ($errors->has('name'))
                                 <span class="invalid-feedback" role="alert">
@@ -19,10 +26,8 @@
                                 </span>
                                 @endif
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="description" class="col-md-4 col-form-label text-md-right">Description</label>
-                            <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="description">Description</label>
                                 <textarea id="description" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" required autofocus>{{ old('description') }}</textarea>
                                 @if ($errors->has('description'))
                                 <span class="invalid-feedback" role="alert">
@@ -30,10 +35,8 @@
                                 </span>
                                 @endif
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="price" class="col-md-4 col-form-label text-md-right">Price</label>
-                            <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="price">Price</label>
                                 <input id="price" type="number" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" name="price" value="{{ old('price') }}" required autofocus>
                                 @if ($errors->has('price'))
                                 <span class="invalid-feedback" role="alert">
@@ -41,49 +44,39 @@
                                 </span>
                                 @endif
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="image" class="col-md-4 col-form-label text-md-right">Image</label>
-                            <div class="col-md-6">
-                                <input id="image" type="file" class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" name="image" value="{{ old('image') }}" autofocus>
+                            <div class="form-group">
+                                <label for="image">Image</label>
+                                <input id="image" type="file" class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" name="image" value="{{ old('image') }}" autofocus onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
                                 @if ($errors->has('image'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('image') }}</strong>
                                 </span>
                                 @endif
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="category" class="col-md-4 col-form-label text-md-right">Category</label>
-                            <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="category">Category</label>
                                 <select class="form-control" name="category_id">
                                     @foreach($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
-                            </div> 
-                        </div>
-                        <div class="form-group row">
-                            <label for="stock" class="col-md-4 col-form-label text-md-right">Stock</label>
-                            <div class="col-md-6">
-                                <input id="stock" type="number" class="form-control{{ $errors->has('stock') ? ' is-invalid' : '' }}" name="quantity" value="{{ old('stock') }}" required autofocus>
-                                @if ($errors->has('stock'))
+                            </div>
+                            <div class="form-group">
+                                <label for="quantity">Quantity</label>
+                                <input id="quantity" type="number" class="form-control{{ $errors->has('quantity') ? ' is-invalid' : '' }}" name="quantity" value="{{ old('quantity') }}" required autofocus>
+                                @if ($errors->has('quantity'))
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('stock') }}</strong>
+                                    <strong>{{ $errors->first('quantity') }}</strong>
                                 </span>
                                 @endif
                             </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Add
-                                </button>
-                            </div>
+                        <div class="col-12 col-sm-4">
+                            <img src="" class="product-image" id="preview" alt="">
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

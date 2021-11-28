@@ -8,7 +8,7 @@ class Category extends Model
 {
 
     protected $fillable = [
-        'name', 'img' ,
+        'name',
     ];
 
     public function products(){

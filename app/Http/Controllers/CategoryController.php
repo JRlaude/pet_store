@@ -24,34 +24,36 @@ class CategoryController extends Controller
         ]);
         $category = new Category();
         $category->name = $request->name;
-        $category->description = $request->description;
         $category->save();
-        return redirect('/category');
+        return redirect()->back()->with('success', 'Product category created successfully');
     }
     public function show($id)
     {
         $category = Category::find($id);
-        return view('category.show', compact('category'));
+        return view('admin.categories.show', compact('category'));
     }
 
     public function edit($id)
     {   
         $category = Category::find($id);
-        return view('category.edit', compact('category'));
+        return view('admin.categories.edit', compact('category'));
     }
     public function update(Request $request, $id)
-    {       
+    {   
+        $this->validate($request, [
+            'name' => 'required|unique:categories|max:255',
+        ]);
         $category = Category::find($id);
         $category->name = $request->name;
-        $category->description = $request->description;
         $category->save();
-        return redirect('/category');
+        return redirect()->route('category.index')->with('success', 'Product category updated successfully');
+
     }
     public function destroy($id)
     {
         $category = Category::find($id);
         $category->delete();
-        return redirect('/category');
+        return redirect()->back()->with('success', 'Product category Deleted successfully');;
     }   
 
 }

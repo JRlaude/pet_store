@@ -4,6 +4,8 @@
 
 @section('pluginscss')
 @include('layouts.plugins.datatables.css')
+@include('layouts.plugins.toastr.css')
+
 @endsection
 
 @section('css')
@@ -29,8 +31,8 @@ Products
             <a href="{{route('products.create')}}" class="btn btn-sm  btn-primary float-right"> <i class="fas fa-plus-circle"></i> Add Product</a>
 
             <div class="input-group-append">
-            <a href="{{route('category.create')}}" class="btn btn-sm  btn-primary float-right"> <i class="fas fa-plus-circle"></i> Add Category</a>
- 
+              <a href="{{route('category.create')}}" class="btn btn-sm  btn-primary float-right"> <i class="fas fa-plus-circle"></i> Add Category</a>
+
             </div>
           </div>
         </div>
@@ -66,7 +68,7 @@ Products
               <td>
                 <a title="View" href="{{route('products.show', $product->id)}}"><i class="fas fa-folder text-info"></i></a>
                 <a title="Edit" href="{{route('products.edit', $product->id)}}"><i class="fas fa-edit text-secondary"></i></a>
-                <a title="Delete" href="#!" ><i class="fas fa-trash text-danger" data-toggle="modal" data-target="#modal-danger{{$product->id}}"></i></a>
+                <a title="Delete" href="#!"><i class="fas fa-trash text-danger" data-toggle="modal" data-target="#modal-danger{{$product->id}}"></i></a>
               </td>
             </tr>
             <div class="modal fade" id="modal-danger{{$product->id}}">
@@ -79,14 +81,14 @@ Products
                     </button>
                   </div>
                   <div class="modal-body">
-                    <p>Are you sure you want to delete  <b> {{ $product->name }}</b></p>
+                    <p>Are you sure you want to delete <b> {{ $product->name }}</b></p>
                   </div>
                   <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <form action="{{route('products.destroy',$product->id)}}" method="POST">
-                        @csrf
-                        @method('delete')
-                        <input type="submit" value="Delete" class="btn btn-danger"/>
+                      @csrf
+                      @method('delete')
+                      <input type="submit" value="Delete" class="btn btn-danger" />
                     </form>
                   </div>
                 </div>
@@ -114,17 +116,53 @@ Products
 
 @section('pluginsjs')
 @include('layouts.plugins.datatables.js')
+@include('layouts.plugins.toastr.js')
+
 @endsection
 
 @section('js')
-
+<x-toastr/>
 <script>
   $(function() {
     $("#example1").DataTable({
       "responsive": true,
       "lengthChange": false,
       "autoWidth": false,
-      "buttons": ["excel", "pdf", "print", "colvis"]
+      "buttons": [{
+                    "extend": 'copy',
+                    "exportOptions": {
+                        "columns": ':visible'
+                    }
+                },
+                {
+                    "extend": 'csv',
+                    "exportOptions": {
+                        "columns": ':visible'
+                    }
+                }, {
+                    "extend": 'excel',
+                    "exportOptions": {
+                        "columns": ':visible'
+                    }
+                },
+                {
+                    "extend": 'pdf',
+                    "exportOptions": {
+                        "columns": ':visible'
+                    }
+                },
+                {
+                    "extend": 'print',
+                    "exportOptions": {
+                        "columns": ':visible'
+                    
+                    }
+                   
+                },
+
+
+                'colvis'
+            ]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
   });
