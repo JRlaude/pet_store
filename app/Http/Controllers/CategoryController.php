@@ -52,6 +52,10 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
+        if ($category->products()->count() > 0) {
+            return redirect()->back()->with('error', 'Cannot Delete Category because of assiociated product(s)');
+        }
+     
         $category->delete();
         return redirect()->back()->with('success', 'Product category Deleted successfully');;
     }   

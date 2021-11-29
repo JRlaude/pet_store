@@ -52,7 +52,7 @@ Products
               <th>Image</th>
               <!-- <th></th> -->
               <th>created at</th>
-              <th></th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>

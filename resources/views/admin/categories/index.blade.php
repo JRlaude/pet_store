@@ -12,11 +12,6 @@
 @section('css')
 
 @endsection
-
-@section('content_header')
-Category
-@endsection
-
 @section('content')
 
 
@@ -25,19 +20,18 @@ Category
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Categories</h3>
+                <div class="card-tools">
+                    <div class="input-group input-group-sm">
+                        <a href="{{ route('category.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus-circle"></i> Create</a>
+                    </div>
+                </div>
             </div>
 
             <!-- /.card-header -->
             <div class="card-body">
                 <div class="row">
                     <div class="col-12">
-                        <a href="{{ route('category.create') }}" class="btn btn-primary">Create</a>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-12">
-                        <table id="categories-table" class="table table-bordered table-striped">
+                        <table id="categories-table" class="table table-sm table-hover table-head-fixed">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -55,14 +49,38 @@ Category
                                     <td>{{ $category->created_at }}</td>
                                     <td>{{ $category->updated_at }}</td>
                                     <td>
-                                        <a href="{{ route('category.edit', $category->id) }}" class="btn btn-primary">Edit</a> 
-                                        <form action="{{route('category.destroy', $category->id) }}" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <input type="submit" value="Delete" class="btn btn-danger" />
-                                        </form>
+                                        <a title="Edit" href="{{ route('category.edit', $category->id) }}"><i class="fas fa-edit text-secondary"></i></a>
+                                        <a title="Delete" href="#!"><i class="fas fa-trash text-danger" data-toggle="modal" data-target="#modal-danger{{$category->id}}"></i></a>
+
                                     </td>
                                 </tr>
+
+                                <div class="modal fade" id="modal-danger{{$category->id}}">
+                                    <div class="modal-dialog modal-dialog-centered modal-sm">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-danger">
+                                                <h4 class="modal-title">Confirmation</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you sure you want to delete <b> {{ $category->name }}</b></p>
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <form action="{{route('category.destroy', $category->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <input type="submit" value="Delete" class="btn btn-danger" />
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <!-- /.modal -->
                                 @endforeach
                             </tbody>
                         </table>
@@ -93,9 +111,7 @@ Category
             "responsive": true,
             "lengthChange": false,
             "autoWidth": false,
-            "buttons": ["excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-
+        });
     });
 </script>
 @endsection

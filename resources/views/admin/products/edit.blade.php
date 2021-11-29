@@ -23,7 +23,7 @@
                 <h3 class="card-title"><i class="fas fa-edit"></i> Edit</h3> 
                 <div class="card-tools">
                     <div class="input-group input-group-sm">
-                        <a href="{{route('products.index')}}" class="btn btn-sm  btn-secondary float-right"> <i class="fas fa-arrow-circle-left"></i> Back</a>
+                        <a href="#!" onclick="history.back();" class="btn btn-sm  btn-secondary float-right"> <i class="fas fa-arrow-circle-left"></i> Back</a>
                     </div>
                 </div>
             </div>

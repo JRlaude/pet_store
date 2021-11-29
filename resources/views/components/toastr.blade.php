@@ -3,7 +3,7 @@
     <script>
         toastr.success("{{session()->get('success')}}");
     </script>
-    @elseif(session()->has('failed'))
+    @elseif(session()->has('error'))
     <script>
         toastr.error("{{session()->get('error')}}");
     </script>
