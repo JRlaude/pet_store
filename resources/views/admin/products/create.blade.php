@@ -55,11 +55,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="category">Category</label>
-                                <select class="form-control" name="category_id">
+                                <input id="category" list="listcategory" class="form-control" name="category" />
+                                <datalist id="listcategory">
                                     @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="{{ $category->name }}"></option>
                                     @endforeach
-                                </select>
+                                </datalist> 
                             </div>
                             <div class="form-group">
                                 <label for="quantity">Quantity</label>

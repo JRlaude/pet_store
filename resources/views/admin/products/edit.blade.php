@@ -51,11 +51,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="category">Category</label> 
-                                <select class="form-control" name="category_id">
+                                <input id="category" list="listcategory" value="{{$product->category->name}}" class="form-control" name="category" />
+                                <datalist id="listcategory">
                                     @foreach($categories as $category)
-                                    <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                    <option value="{{ $category->name }}"></option>
                                     @endforeach
-                                </select> 
+                                </datalist> 
                             </div>
                             <div class="form-group">
                                 <label for="quantity">Quantity</label> 
@@ -64,7 +65,7 @@
                             <button type="submit" class="btn btn-primary">Update</button> 
                         </div>
                         <div class="col-12 col-sm-4"> 
-                            <img src="" class="product-image" id="preview" alt=""> 
+                            <img src="{{asset('/storage/images/products/'.$product->img)}}" class="product-image" id="preview" alt=""> 
                         </div>
                     </div>
                 </div>
