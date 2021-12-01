@@ -25,7 +25,6 @@ class IsAdminMiddleware
             return $next($request);
         }
 
-        return redirect()->back()->with('unauthorised', 'You are 
-          unauthorised to access this page');
+        return redirect()->back()->with('error', 'You are not authorised to access this page');
     }
 }

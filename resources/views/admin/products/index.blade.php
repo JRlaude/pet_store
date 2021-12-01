@@ -4,7 +4,6 @@
 
 @section('pluginscss')
 @include('layouts.plugins.datatables.css')
-@include('layouts.plugins.toastr.css')
 
 @endsection
 
@@ -42,7 +41,7 @@ Products
 
       <!-- /.card-header -->
       <div class="card-body">
-        <table id="example1" class="table table-sm table-hover table-head-fixed ">
+        <table id="products-table" class="table table-sm table-hover table-head-fixed ">
           <thead>
             <tr>
               <th>category</th>
@@ -116,54 +115,52 @@ Products
 
 @section('pluginsjs')
 @include('layouts.plugins.datatables.js')
-@include('layouts.plugins.toastr.js')
 
 @endsection
 
 @section('js')
-<x-toastr/>
 <script>
   $(function() {
-    $("#example1").DataTable({
+    $("#products-table").DataTable({
       "responsive": true,
       "lengthChange": false,
       "autoWidth": false,
       "buttons": [{
-                    "extend": 'copy',
-                    "exportOptions": {
-                        "columns": ':visible'
-                    }
-                },
-                {
-                    "extend": 'csv',
-                    "exportOptions": {
-                        "columns": ':visible'
-                    }
-                }, {
-                    "extend": 'excel',
-                    "exportOptions": {
-                        "columns": ':visible'
-                    }
-                },
-                {
-                    "extend": 'pdf',
-                    "exportOptions": {
-                        "columns": ':visible'
-                    }
-                },
-                {
-                    "extend": 'print',
-                    "exportOptions": {
-                        "columns": ':visible'
-                    
-                    }
-                   
-                },
+          "extend": 'copy',
+          "exportOptions": {
+            "columns": ':visible'
+          }
+        },
+        {
+          "extend": 'csv',
+          "exportOptions": {
+            "columns": ':visible'
+          }
+        }, {
+          "extend": 'excel',
+          "exportOptions": {
+            "columns": ':visible'
+          }
+        },
+        {
+          "extend": 'pdf',
+          "exportOptions": {
+            "columns": ':visible'
+          }
+        },
+        {
+          "extend": 'print',
+          "exportOptions": {
+            "columns": ':visible'
+
+          }
+
+        },
 
 
-                'colvis'
-            ]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        'colvis'
+      ]
+    }).buttons().container().appendTo('#products-table_wrapper .col-md-6:eq(0)');
 
   });
 </script>

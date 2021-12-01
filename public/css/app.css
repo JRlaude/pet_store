@@ -73,10 +73,7 @@ body {
   color: #212529;
   text-align: left;
   background-color: #f8fafc;
- 
 }
-
-
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
@@ -8667,9 +8664,6 @@ button.bg-dark:focus {
 .pt-4,
 .py-4 {
   padding-top: 1.5rem !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .pr-4,
@@ -8680,9 +8674,6 @@ button.bg-dark:focus {
 .pb-4,
 .py-4 {
   padding-bottom: 1.5rem !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .pl-4,

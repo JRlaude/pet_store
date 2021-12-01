@@ -15,11 +15,7 @@ class ProductController extends Controller
         $products = Product::all();
         return view('admin.products.index', compact('products'));
     }
-    public function getProducts()
-    {
-        $products = Product::all();
-        return view('products.index', compact('products'));
-    }
+
     public function create()
     {
         $categories = Category::all();
@@ -31,17 +27,17 @@ class ProductController extends Controller
             'name' => 'required',
             'price' => 'required',
             'category' => 'required',
-            'image' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'description' => 'required',
             'quantity' => 'required',
         ]);
         $product = new Product();
+        $product->category_id = $this->getCategoryId($request->category);
+        $product->img = $product->saveImage($request->image);
         $product->name = $request->name;
-        $product->price = $request->price;
         $product->description = $request->description;
-        $product->category_id = $this->category($request->category);
+        $product->price = $request->price;
         $product->quantity = $request->quantity;
-        $product->img = $this->image($request->image);
         $product->save();
         return redirect()->route('products.index')->with('success', 'Product created successfully');
     }
@@ -76,13 +72,11 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->price = $request->price;
         $product->description = $request->description;
-        $product->category_id = $this->category($request->category);
+        $product->category_id = $this->getCategoryId($request->category);
         $product->quantity = $request->quantity;
         if ($request->hasFile('image')) {
-            if ($product->img) {
-                Storage::delete('/public/images/products/' . $product->img);
-            }
-            $product->img = $this->image($request->image);
+            $product->deleteImage($product->img);
+            $product->img = $product->saveImage($request->image);
         }
         $product->save();
         return redirect()->route('products.index')->with('success', 'Product updated successfully');
@@ -91,11 +85,16 @@ class ProductController extends Controller
     {
         //delete data
         $product = Product::find($id);
-        $product->delete();
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully');
+        if ($product->order_details()->count() > 0) {
+            return redirect()->route('products.index')->with('error', 'Product has been ordered');
+        }
+        $product->deleteImage($product->img);
+        if ($product->delete()) {
+            return redirect()->route('products.index')->with('success', 'Product deleted successfully');
+        }
     }
 
-    public function category($category_name)
+    public function getCategoryId($category_name)
     {
         $category = Category::where('name', $category_name)->first();
         if ($category) {
@@ -107,12 +106,16 @@ class ProductController extends Controller
             return $category->id;
         }
     }
-    public function image($image)
+
+
+    public function getProducts()
     {
-        $imageName = time() . '_' . $image->getClientOriginalName();
-        $image->storeAs('images/products', $imageName, 'public');
-        return $imageName;
+        $products = Product::all();
+        return view('products.index', compact('products'));
     }
+
+
+
     // public function addToCart(Request $request, $id)
     // {
     //     $product = Product::find($id);

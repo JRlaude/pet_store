@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Cart;
 use App\Product;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function index()
+    public function __construct()
     {
-        return view('cart.index');
+        $this->middleware('auth');
+    }    
+    public function index()
+    {   
+        $cart = Cart::where('user_id', auth()->user()->id)->get(); 
+        dd($cart);
+        return view('carts.index', compact('cart'));
     }
     public function add(Request $request)
     {

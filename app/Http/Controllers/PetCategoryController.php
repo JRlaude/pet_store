@@ -9,11 +9,12 @@ class PetCategoryController extends Controller
 {
     public function index()
     {
-        return view('pet_category.index');
+        $pet_categories = PetCategory::all();
+        return view('admin.pet_categories.index', compact('pet_categories'));
     }
     public function create()
     {
-        return view('pet_category.create');
+        return view('admin.pet_categories.create');
     }
     public function store(Request $request)
     {
@@ -23,17 +24,12 @@ class PetCategoryController extends Controller
         $pet_category = new PetCategory;
         $pet_category->name = $request->name;
         $pet_category->save();
-        return redirect('/pet_category');
-    }
-    public function show($id)
-    {
-        $pet_category = PetCategory::find($id);
-        return view('pet_category.show', compact('pet_category'));
+        return redirect()->back()->with('success', 'Pet category created successfully');
     }
     public function edit($id)
     {
         $pet_category = PetCategory::find($id);
-        return view('pet_category.edit', compact('pet_category'));
+        return view('admin.pet_categories.edit', compact('pet_category'));
     }
     public function update(Request $request, $id)
     {
@@ -43,18 +39,17 @@ class PetCategoryController extends Controller
         $pet_category = PetCategory::find($id);
         $pet_category->name = $request->name;
         $pet_category->save();
-        return redirect('/pet_category');
+        return redirect()->route('pet_categories.index')->with('success', 'Product category updated successfully');
     }
     public function destroy($id)
     {
         $pet_category = PetCategory::find($id);
+
+        if ($pet_category->pets()->count() > 0) {
+            return redirect()->back()->with('error', 'Cannot Delete Pet Category because of assiociated pet(s)');
+        }
         $pet_category->delete();
-        return redirect('/pet_category');
+        return redirect()->back()->with('success', 'Pet category Deleted successfully');
     }
-    public function pet_category_list()
-    {
-        $pet_categories = PetCategory::all();
-        return view('pet_category.pet_category_list', compact('pet_categories'));
-    }
-    
+
 }

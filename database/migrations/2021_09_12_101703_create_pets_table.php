@@ -16,7 +16,7 @@ class CreatePetsTable extends Migration
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pet_category_id');
-            $table->foreign('pet_category_id')->references('id')->on('categories');
+            $table->foreign('pet_category_id')->references('id')->on('pet_categories');
             $table->string('img');
             $table->string('name');
             $table->text('description');

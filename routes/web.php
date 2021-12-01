@@ -30,7 +30,7 @@ Route::get('/about', function () {
 });  
 
 Route::resource('/users', 'UserController');
-Route::get('/profile', 'UserController@profile')->name('profile');
+Route::get('{user}/profile', 'UserController@profile')->name('profile');
 
 Route::resource('/carts', 'CartController');
 Route::resource('/orders', 'OrderController');
@@ -47,10 +47,11 @@ Route::middleware('admin')->group(function () {
         Route::get('/', 'AdminController@index')->name('admin.index'); 
         Route::get('/dashboard', 'AdminController@index')->name('dashboard');
 
+        Route::get('/users', 'UserController@index');
 
         Route::resource('/category', 'CategoryController');
         Route::resource('/products', 'ProductController');
-        Route::resource('/petCategories', 'PetCategoryController');
+        Route::resource('/pet_categories', 'PetCategoryController');
         Route::resource('/pets', 'PetController');
         Route::resource('/orders', 'OrderController');
     });

@@ -1,6 +1,6 @@
 @extends('layouts.adminlte')
 
-@section('title', 'Create Category | ')
+@section('title', 'Create Pet Category | ')
 
 
 @section('pluginscss')
@@ -12,7 +12,7 @@
 @endsection
 
 @section('content_header')
-Create Category
+Create Pet Category
 @endsection
 
 @section('content')
@@ -22,17 +22,17 @@ Create Category
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Create Category</h3>
+                <h3 class="card-title">Create Pet Category</h3>
                 <div class="card-tools">
                     <div class="input-group input-group-sm">
-                        <a href="{{route('category.index')}}" class="btn btn-sm  btn-secondary float-right"> <i class="fas fa-arrow-circle-left"></i> Back</a>
+                        <a href="{{route('pet_categories.index')}}" class="btn btn-sm  btn-secondary float-right"> <i class="fas fa-arrow-circle-left"></i> Back</a>
                     </div>
                 </div>
             </div>
 
             <!-- /.card-header -->
             <div class="card-body">
-                <form method="POST" action="{{ route('category.store') }}" autocomplete="off">
+                <form method="POST" action="{{ route('pet_categories.store') }}" autocomplete="off">
                     @csrf
                     <div class="row">
                         <div class="col-sm-12">
@@ -56,8 +56,8 @@ Create Category
 </div>
 
 @endsection
-@section('pluginsjs') 
+@section('pluginsjs')
 @endsection
 
-@section('js')
+@section('js') 
 @endsection

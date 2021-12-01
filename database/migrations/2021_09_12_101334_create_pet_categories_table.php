@@ -16,7 +16,7 @@ class CreatePetCategoriesTable extends Migration
         Schema::create('pet_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('img');
+            $table->timestamps();
         });
     }
 

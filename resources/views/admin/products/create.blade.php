@@ -46,7 +46,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="image">Image</label>
-                                <input id="image" type="file" class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" name="image" value="{{ old('image') }}" autofocus onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
+                                <input id="image" type="file" accept="image/*" class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" name="image" value="{{ old('image') }}" autofocus onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
                                 @if ($errors->has('image'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('image') }}</strong>
@@ -55,12 +55,17 @@
                             </div>
                             <div class="form-group">
                                 <label for="category">Category</label>
-                                <input id="category" list="listcategory" class="form-control" name="category" />
+                                <input id="category" list="listcategory" class="form-control {{ $errors->has('category') ? ' is-invalid' : '' }}" name="category"  value="{{ old('category') }}"  />
+                                @if ($errors->has('category'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('category') }}</strong>
+                                </span>
+                                @endif
                                 <datalist id="listcategory">
                                     @foreach($categories as $category)
                                     <option value="{{ $category->name }}"></option>
                                     @endforeach
-                                </datalist> 
+                                </datalist>
                             </div>
                             <div class="form-group">
                                 <label for="quantity">Quantity</label>

@@ -25,8 +25,10 @@
     <!-- Adminlte 3 -->
     <!-- font awesome -->
     <link href="{{ asset('AdminLTE-3.1.0/plugins/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <!-- plugins -->
     @yield('pluginscss')
-
+    <!-- toastr -->
+    <link rel="stylesheet" href="{{ asset('AdminLTE-3.1.0/plugins/toastr/toastr.min.css') }}">
 
     <!-- Theme Styles -->
     <link href="{{ asset('AdminLTE-3.1.0/dist/css/adminlte.min.css') }}" rel="stylesheet">

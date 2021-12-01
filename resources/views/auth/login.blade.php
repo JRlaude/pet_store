@@ -4,7 +4,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-4">
             <div class="card card-primary card-outline rounded-lg">
                 <div class="card-header text-center rounded-lg">
                     <h2 class="text-uppercase mb-0" id="">{{ __('Login') }}</h2>

@@ -25,7 +25,7 @@ Orders
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <table id="example1" class="table table-sm table-bordered">
+                <table id="orders-table" class="table table-sm table-bordered">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -513,46 +513,12 @@ Orders
 @section('js')
 
 <script>
-    $(function() {
-        $("#example1").DataTable({ 
-            responsive: true,
-            lengthChange: true,
-            autoWidth: false,
-            buttons: [  {
-                    extend: 'excel',
-                    exportOptions: {
-                        columns: ':visible'
-                    }
-                },
-                {
-                    extend: 'pdf',
-                    exportOptions: {
-                        columns: ':visible'
-                    }
-                },
-                {
-                    extend: 'print',
-                    exportOptions: {
-                        columns: ':visible'
-                    
-                    }
-                   
-                },  
-
-
-                'colvis'
-            ]
-
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
- 
-    });
-
-    $(function() {
-    $("#example2").DataTable({
+  $(function() {
+    $("#orders-table").DataTable({
       "responsive": true,
-      "lengthChange": true,
-      "autoWidth": true,
-     "buttons": [{
+      "lengthChange": false,
+      "autoWidth": false,
+      "buttons": [{
                     "extend": 'copy',
                     "exportOptions": {
                         "columns": ':visible'
@@ -587,9 +553,8 @@ Orders
 
                 'colvis'
             ]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
- 
+    }).buttons().container().appendTo('#orders-table_wrapper .col-md-6:eq(0)');
+
   });
-  
 </script>
 @endsection

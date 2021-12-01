@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PetCategory extends Model
 {
     protected $fillable = [
-        'name', 'img' ,
+        'name',
     ];
 
     public function pets(){

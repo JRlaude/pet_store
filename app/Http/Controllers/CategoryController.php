@@ -27,11 +27,6 @@ class CategoryController extends Controller
         $category->save();
         return redirect()->back()->with('success', 'Product category created successfully');
     }
-    public function show($id)
-    {
-        $category = Category::find($id);
-        return view('admin.categories.show', compact('category'));
-    }
 
     public function edit($id)
     {   
