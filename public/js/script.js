@@ -9,6 +9,7 @@ const productsPath = document.querySelector('#products-link').pathname;
 const petCategoryPath = document.querySelector('#pet-category-link').pathname;
 const petsPath = document.querySelector('#pets-link').pathname;
 const ordersPath = document.querySelector('#orders-link').pathname;
+const reservationsPath = document.querySelector('#reserveations-link').pathname;
 const usersPath = document.querySelector('#users-link').pathname;
 
 /**
@@ -37,6 +38,9 @@ window.onload = () => {
 
         case ordersPath:
             document.querySelector('#orders-link').classList.add('active');
+            break;
+        case reservationsPath:
+            document.querySelector('#reservations-link').classList.add('active');
             break;
 
         case usersPath:

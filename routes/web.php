@@ -48,6 +48,8 @@ Route::middleware('admin')->group(function () {
         Route::get('/dashboard', 'AdminController@index')->name('dashboard');
 
         Route::get('/users', 'UserController@index');
+        Route::get('/orders', 'OrderController@index');
+        Route::get('/reservations', 'ReservationController@index');
 
         Route::resource('/category', 'CategoryController');
         Route::resource('/products', 'ProductController');

@@ -7,81 +7,71 @@ use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
-        return view('reservation.index');
+        if (auth()->user()->isAdmin) { 
+            $reservations = Reservation::all();
+            return view('admin.reservations.index', compact('reservations'));
+        } else {
+            $reservations = auth()->user()->reservations;
+            return view('reservations.index', compact('reservations'));
+        }
+     
     }
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'message' => 'required'
+            'date' => 'required',
+            'time' => 'required',
         ]);
-        $resevation = new Reservation;
-        $resevation->name = $request->name;
-        $resevation->email = $request->email;
-        $resevation->phone = $request->phone;
-        $resevation->message = $request->message;
-        $resevation->save();
+        $reservation = new Reservation;
+        $reservation->date = $request->date;
+        $reservation->time = $request->time;
+        $reservation->user_id = auth()->user()->id;
+        $reservation->pet_id = $request->pet_id;
+        $reservation->save();
         return redirect()->back()->with('success', 'Thanks for your reservation');
     }
 
     public function show($id)
     {
         //
-        $resevation = Reservation::find($id);
-        return view('reservation.show', compact('resevation'));
-
+        $reservation = Reservation::find($id);
+        return view('reservation.show', compact('reservation'));
     }
     public function destroy($id)
     {
         //
-        $resevation = Reservation::find($id);
-        $resevation->delete();
+        $reservation = Reservation::find($id);
+        $reservation->delete();
         return redirect()->back()->with('success', 'Reservation Deleted');
     }
     public function edit($id)
     {
         //
-        $resevation = Reservation::find($id);
-        return view('reservation.edit', compact('resevation'));
+        $reservation = Reservation::find($id);
+        return view('reservation.edit', compact('reservation'));
     }
     public function update(Request $request, $id)
     {
         //
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'message' => 'required'
+            'date' => 'required',
+            'time' => 'required',
         ]);
-        $resevation = Reservation::find($id);
-        $resevation->name = $request->name;
-        $resevation->email = $request->email;
-        $resevation->phone = $request->phone;
-        $resevation->message = $request->message;
-        $resevation->save();
+        $reservation = Reservation::find($id);
+        $reservation->date = $request->date;
+        $reservation->time = $request->time;
+        $reservation->save();
         return redirect()->route('reservation.index')->with('success', 'Reservation Updated');
     }
     public function getReservation()
     {
-        $resevations = Reservation::all();
-        return view('reservation.index', compact('resevations'));
+        $reservations = Reservation::where('user_id', auth()->user()->id)->get();
+        return view('reservation.index', compact('reservations'));
     }
-    // public function getReservationData()
-    // {
-    //     $resevations = Reservation::all();
-    //     return datatables()->of($resevations)
-    //         ->addColumn('action', function ($resevations) {
-    //             return '<a href="' . route('reservation.show', $resevations->id) . '" class="btn btn-primary btn-sm">View</a>
-    //             <a href="' . route('reservation.edit', $resevations->id) . '" class="btn btn-warning btn-sm">Edit</a>
-    //             <a href="' . route('reservation.destroy', $resevations->id) . '" class="btn btn-danger btn-sm">Delete</a>';
-    //         })
-    //         ->rawColumns(['action'])
-    //         ->make(true);
-    // }
-  
-
 }

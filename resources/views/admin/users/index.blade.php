@@ -46,7 +46,8 @@
                                 <td>{{ $user->created_at }}</td>
                                 <td>{{ $user->updated_at }}</td>
                                 <td>
-                                    <a href="{{ route('profile', $user->id) }}" class="btn btn-info btn-sm">Show</a>
+                                    <a href="{{ route('profile', $user->id) }}" class="btn btn-info btn-sm">View</a> ->
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -61,7 +62,7 @@
 
 
 @section('pluginsjs')
-@include('layouts.plugins.datatables.js')  
+@include('layouts.plugins.datatables.js')
 @endsection
 
 @section('js')

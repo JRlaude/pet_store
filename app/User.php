@@ -39,8 +39,7 @@ class User extends Authenticatable
 
     public function getName()
     {
-      return "{$this->first_name} {$this->last_name}"; 
-    //  return auth()->user()->first_name . ' ' . auth()->user()->last_name; 
+      return "{$this->first_name} {$this->last_name}";
     }
     //    public function getRouteKeyName(){
     //     return 'first_name';

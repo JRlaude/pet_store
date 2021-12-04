@@ -7,10 +7,20 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {   
-        $orders = Order::all();
-        return view('admin.orders.index', compact('orders'));
+        if(auth()->user()->isAdmin){
+            $orders = Order::all();
+            return view('admin.orders.index', compact('orders'));
+        }else{
+            $orders = auth()->user()->orders; 
+            return view('orders.index', compact('orders')); 
+        }
+       
     }
     public function create()
     {

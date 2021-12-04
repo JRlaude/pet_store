@@ -47,6 +47,14 @@
     </a>
 </li>
 <li class="nav-item">
+    <a href="/admin/reservations" class="nav-link"  id="reservations-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            Reservations
+        </p>
+    </a>
+</li>
+<li class="nav-item">
     <a href="/admin/users" class="nav-link"  id="users-link">
         <i class="nav-icon fas fa-th"></i>
         <p>
