@@ -10,62 +10,55 @@ class CartController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-    }    
+        return $this->middleware('auth');
+    }
     public function index()
-    {   
-        $cart = Cart::where('user_id', auth()->user()->id)->get(); 
-        dd($cart);
-        return view('carts.index', compact('cart'));
-    }
-    public function add(Request $request)
     {
-        $product = Product::find($request->id);
-        $cart = session()->get('cart');
-        if(!$cart) {
-            $cart = [
-                $request->id => [
-                    "name" => $product->name,
-                    "quantity" => $request->quantity,
-                    "price" => $product->price,
-                    "photo" => $product->photo
-                ]
-            ];
-            session()->put('cart', $cart);
-            return redirect()->back()->with('success', 'Product added to cart successfully!');
-        }
-        if(isset($cart[$request->id])) {
-            return redirect()->back()->with('success', 'Product is already in your cart!');
-        }
-        $cart[$request->id] = [
-            "name" => $product->name,
-            "quantity" => $request->quantity,
-            "price" => $product->price,
-            "photo" => $product->photo
-        ];
-        session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+        
+        $products = \Cart::session(auth()->id())->getContent()->sortBy('id');
+        $shipping = 50;
+        $cartSubTotal = \Cart::session(auth()->id())->getSubtotal();
+        $cartFinalTotal = $cartSubTotal + $shipping;
+
+        $data = [
+            'products' => $products,
+            'cartSubTotal' => $cartSubTotal,
+            'cartFinalTotal' => $cartFinalTotal,
+            'shippingFee' => $shipping,
+        ]; 
+        return view('carts.index')->with($data);
     }
-    public function update(Request $request)
+
+    public function add(Product $product)
     {
-        if($request->id and $request->quantity)
-        {
-            $cart = session()->get('cart');
-            $cart[$request->id]["quantity"] = $request->quantity;
-            session()->put('cart', $cart);
-            session()->flash('success', 'Cart updated successfully');
-        }
-    }
-    public function remove(Request $request)
-    {
-        if($request->id) {
-            $cart = session()->get('cart');
-            if(isset($cart[$request->id])) {
-                unset($cart[$request->id]);
-                session()->put('cart', $cart);
-            }
-            session()->flash('success', 'Product removed successfully');
-        }
+        \Cart::session(auth()->id())->add(array(
+            'id' => $product->id,
+            'name' => $product->name,
+            'price' => $product->price,
+            'quantity' => 1,
+            'attributes' => array(
+                'image' => $product->image,
+            ),
+            'associatedModel' => $product,
+        ));
+        // return redirect()->back();
+        return redirect(route('carts.index'))->with('success','An item successfully added to cart');
     }
  
+    public function update(Request $request, Product $product)
+    {
+        \Cart::session(auth()->user()->id)->update($product->id,[
+            'quantity' => array(
+                'relative' => false,
+                'value' => $request->quantity,
+            )
+        ]);
+        return redirect(route('carts.index'))->with('success', 'An item quantity has been updated successfuly');
+       
+    }
+
+    public function remove(Product $product){
+        \Cart::session(auth()->id())->remove($product->id);
+        return redirect(route('carts.index'))->with('success', 'A cart item has been removed successfully');
+    }
 }

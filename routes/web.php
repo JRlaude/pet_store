@@ -23,6 +23,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/products', 'ProductController@getProducts')->name('products');
+Route::get('/products/{id}', 'ProductController@getProduct')->name('product');
 Route::get('/pets', 'PetController@getPets')->name('pets');
 Route::get('/posts', 'PostController@getPosts')->name('posts'); 
 Route::get('/about', function () {
@@ -59,3 +60,9 @@ Route::middleware('admin')->group(function () {
     });
 });
 
+    // Carts
+    Route::get('/carts', 'CartController@index')->name('carts.index');
+    Route::post('/add-to-cart/{product:id}', 'CartController@add')->name('carts.add');
+    Route::get('/remove/{product:id}', 'CartController@remove')->name('carts.remove');
+    Route::get('/remove-to-cart/{product:id}', 'CartController@destroy')->name('carts.destroy');
+    Route::put('/carts/update/{product:id}', 'CartController@update')->name('carts.update');

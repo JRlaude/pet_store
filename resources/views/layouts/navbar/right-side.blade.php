@@ -14,7 +14,7 @@
                         @else
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
+                            <a class="nav-link" href="/carts"><i class="fas fa-shopping-cart"></i></a>
                         </li>
                         <!-- <li class="nav-item">
                             <a class="nav-link" href="#"><i class="fas fa-envelope"></i></a>

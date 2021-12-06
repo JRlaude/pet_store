@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    //
+    //admin controller
     public function index()
     {
         $products = Product::all();
@@ -107,13 +107,17 @@ class ProductController extends Controller
         }
     }
 
-
+    //user controller
     public function getProducts()
     {
         $products = Product::all();
         return view('products.index', compact('products'));
     }
-
+    public function getProduct($id)
+    {
+        $product = Product::find($id);
+        return view('products.show', compact('product'));
+    }
 
 
     // public function addToCart(Request $request, $id)
