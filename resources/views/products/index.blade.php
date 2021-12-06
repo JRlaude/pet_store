@@ -9,7 +9,7 @@
     <div class="card mb-4 shadow-sm">
         <img class="card-img-top" src="{{ asset('storage/'.$product->image) }}" alt="Card image cap">
         <div class="card-body">
-            <p class="card-text">{{ $product->name }} 1 </p>
+            <p class="card-text">{{ $product->name }} </p>
             <div class="d-flex justify-content-between align-items-center"> 
                 <small class="text-muted">{{ $product->created_at->diffForHumans() }}</small>
             </div>
