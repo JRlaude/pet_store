@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 class Product extends Model
 {
     protected $fillable = [
-        'category_id', 'img', 'name',  'description', 'price', 'quantity',
+        'category_id', 'image', 'name',  'description', 'price', 'quantity',
     ];
 
     public function saveImage($image)
@@ -29,10 +29,6 @@ class Product extends Model
     public function carts()
     {
         return $this->hasMany(Cart::class);
-    }
-    public function order_details()
-    {
-        return $this->hasMany(OrderDetails::class);
     }
     public function category()
     {

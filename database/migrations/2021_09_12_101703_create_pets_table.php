@@ -17,7 +17,7 @@ class CreatePetsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('pet_category_id');
             $table->foreign('pet_category_id')->references('id')->on('pet_categories');
-            $table->string('img');
+            $table->string('image');
             $table->string('name');
             $table->text('description');
             $table->float('price', 8, 2);

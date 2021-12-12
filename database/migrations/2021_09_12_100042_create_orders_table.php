@@ -17,10 +17,13 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->json('products');
+            $table->float('total', 8, 2);
             $table->string('shipping_address');
-            $table->dateTime('packing_time', 0);
-            $table->dateTime('delivery_time', 0);
-            $table->dateTime('arrival_time', 0);
+            $table->string('payment_method');
+            $table->dateTime('packing_time', 0)->nullable();
+            $table->dateTime('delivery_time', 0)->nullable();
+            $table->dateTime('arrival_time', 0)->nullable();
             $table->string('status');
             $table->timestamps();
         });

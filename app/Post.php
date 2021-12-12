@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $fillable = [
-        'user_id', 'img', 'captions',
+        'user_id', 'image', 'captions',
      ];
      public function hearts(){
         return $this->hasMany(Heart::class);

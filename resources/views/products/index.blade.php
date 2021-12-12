@@ -2,21 +2,76 @@
 
 @section('title', 'Product')
 
+@section('css')
+<style>
+    .card-img-top {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+</style>
+@endsection
 @section('content')
-@foreach($products as $product)
-<a href="{{ route('product', $product->id) }}">
-<div class="col-md-4">
-    <div class="card mb-4 shadow-sm">
-        <img class="card-img-top" src="{{ asset('storage/'.$product->image) }}" alt="Card image cap">
-        <div class="card-body">
-            <p class="card-text">{{ $product->name }} </p>
-            <div class="d-flex justify-content-between align-items-center"> 
-                <small class="text-muted">{{ $product->created_at->diffForHumans() }}</small>
-            </div>
+<div class="container">
+    <div class="dropdown d-flex justify-content-between align-items-center mb-5  d-block  d-sm-none">
+        <a href="#!" class="dropdown-toggle text-body h3" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+            Categories
+        </a>
+        <div class="dropdown-menu">
+            @foreach($categories as $category)
+            <a class="dropdown-item" href="">{{$category->name}}</a>
+            @endforeach
+        </div>
+        <form action="{{route('searchProduct')}}"  class="md-form md-outline mt-0 d-flex justify-content-between align-items-center">
+            @csrf
+            <input type="text" id="search" name="search" class="form-control mb-0" placeholder="Search...">
+            <button title="search" type="submit" class="btn btn-flat"> <i class="fas fa-search "></i> </button>
+        </form>
+    </div>
+    <div class="row my-5">
+
+        <div class="col-md-3">
+            <!-- Section: Sidebar -->
+            <section class="mb-5 d-none d-sm-block">
+                <form action="" class="md-form md-outline mt-0 d-flex justify-content-between align-items-center">
+                    <input type="text" id="search12" class="form-control mb-0" placeholder="Search...">
+                    <button title="search" type="submit" class="btn btn-flat"> <i class="fas fa-search "></i> </button>
+                </form>
+                <h5 class="my-3">Categories</h5>
+                <div class="text-muted small text-uppercase">
+                    @foreach($categories as $category)
+                    <p class="mb-3"><a href="{{route('productByCategory' , $category->id)}}" class="card-link-secondary">{{$category->name}}</a></p>
+                    @endforeach
+                </div>
+            </section>
+        </div>
+        <!-- Products -->
+        <div class="col-md-9">
+            <section class="row">
+                @foreach($products as $product)
+                <div class="col-lg-3 col-md-4 col-6 mb-2 mb-lg-0">
+                    <div class="card">
+                        <a href="{{ route('product', $product->id) }}"> <img src="{{ asset('storage/images/products/'.$product->image) }}" class="card-img-top" alt="..."> </a>
+                        <div class="card-body">
+                            <a href="{{ route('product', $product->id) }}">
+                                <h5 class="text-dark  text-truncate "> {{ $product->name }} </h5>
+                                <p class="small text-muted font-weight-light text-truncate">{{$product->description}}</p>
+
+                                <a title="buy now" href="{{ route('buynow', $product->id) }}" class="small rounded-circle btn btn-sm btn-primary float-right"><i class="fas fa-shopping-bag"> </i></a>
+                                <a title="add to cart" href="{{ route('carts.add', $product->id) }}" class="small rounded-circle btn btn-sm btn-outline-primary float-right"><i class="fas fa-cart-plus fa-sm"></i></a>
+                                <p class="text-muted small mb-0">&#8369; {{ $product->price }}</p>
+                            </a>
+                        </div>
+                        <!-- <div class="card-footer text-muted">
+                        <a title="buy now" href="{{ route('buynow', $product->id) }}" class="small rounded-circle btn btn-sm btn-primary float-right"><i class="fas fa-shopping-bag"> </i></a>
+                        <a title="add to cart" href="{{ route('carts.add', $product->id) }}" class="small rounded-circle btn btn-sm btn-outline-primary float-right"><i class="fas fa-cart-plus"></i></a>
+                        </div> -->
+                    </div>
+                </div>
+                @endforeach
+            </section>
         </div>
     </div>
-</div>
-</a>
-@endforeach
 
+</div>
 @endsection

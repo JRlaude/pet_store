@@ -35,7 +35,7 @@ class PetController extends Controller
         ]);
         $pet = new Pet();
         $pet->pet_category_id = $this->getPetCategoryId($request->pet_category);
-        $pet->img = $pet->saveImage($request->image);
+        $pet->image = $pet->saveImage($request->image);
         $pet->name = $request->name;
         $pet->description = $request->description;
         $pet->price = $request->price;
@@ -63,8 +63,8 @@ class PetController extends Controller
         $pet->description = $request->description;
         $pet->price = $request->price;
         if ($request->hasFile('image')) {
-            $pet->deleteImage($pet->img);
-            $pet->img = $pet->saveImage($request->image);
+            $pet->deleteImage($pet->image);
+            $pet->image = $pet->saveImage($request->image);
         }
 
         $pet->save();
@@ -76,7 +76,7 @@ class PetController extends Controller
         if ($pet->reservations()->count() > 0) {
             return redirect()->route('pets.index')->with('error', 'Pet has been reserved');
         }
-        $pet->deleteImage($pet->img);
+        $pet->deleteImage($pet->image);
         $pet->delete();
         return redirect()->route('pets.index')->with('success', 'Pet has been deleted Successfully');
     }

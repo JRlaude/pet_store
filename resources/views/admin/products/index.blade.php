@@ -4,7 +4,6 @@
 
 @section('pluginscss')
 @include('layouts.plugins.datatables.css')
-
 @endsection
 
 @section('css')
@@ -61,7 +60,9 @@ Products
               <td>{{ $product->name }}</td>
               <td>{{$product->description}}</td>
               <td>{{$product->price}}</td>
-              <td>{{$product->img}}</td>
+              <td class="w-25">
+              <img class="img-fluid" src="/storage/images/products/{{$product->image}}" alt="">
+              </td>
               <!-- <td> </td> -->
               <td>{{ $product->created_at->diffForHumans() }}</td>
               <td>

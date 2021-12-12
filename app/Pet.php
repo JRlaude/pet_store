@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 class Pet extends Model
 {
     protected $fillable = [
-        'pet_category_id', 'img', 'name',  'description', 'price',
+        'pet_category_id', 'image', 'name',  'description', 'price',
     ];
 
     public function saveImage($image)

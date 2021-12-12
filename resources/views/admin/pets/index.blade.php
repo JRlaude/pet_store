@@ -61,7 +61,7 @@ pets
               <td>{{ $pet->name }}</td>
               <td>{{$pet->description}}</td>
               <td>{{$pet->price}}</td>
-              <td>{{$pet->img}}</td>
+              <td>{{$pet->image}}</td>
               <!-- <td> </td> -->
               <td>{{ $pet->created_at->diffForHumans() }}</td>
               <td>

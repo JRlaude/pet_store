@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Product;
+use App\ShippingAddress;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -12,60 +14,78 @@ class OrderController extends Controller
         $this->middleware('auth');
     }
     public function index()
-    {   
-        if(auth()->user()->isAdmin){
+    {
+        if (auth()->user()->isAdmin) {
             $orders = Order::all();
             return view('admin.orders.index', compact('orders'));
-        }else{
-            $orders = auth()->user()->orders; 
-            return view('orders.index', compact('orders')); 
+        } else {
+            $orders = auth()->user()->orders;
+            return view('orders.index', compact('orders'));
         }
-       
     }
-    public function create()
+    public function buynow(Product $product)
     {
-        return view('order.create');
+        $shippingFee = 50;
+        $finalTotal = $product->price + $shippingFee;
+        $shippingAddress = auth()->user()->shipping_addresses->last();
+        return view('orders.buynow', compact('product', 'shippingFee', 'finalTotal', 'shippingAddress'));
     }
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
+            'brgy' => 'required',
             'city' => 'required',
-            'state' => 'required',
-            'zip' => 'required',
-            'card_number' => 'required',
-            'card_name' => 'required',
-            'card_expiration' => 'required',
-            'card_cvv' => 'required',
-        ]);
+            'province' => 'required',
+            'country' => 'required',
 
+        ]);
         $order = new Order();
-        $order->name = $request->name;
-        $order->email = $request->email;
-        $order->phone = $request->phone;
-        $order->address = $request->address;
-        $order->city = $request->city;
-        $order->state = $request->state;
-        $order->zip = $request->zip;
-        $order->card_number = $request->card_number;
-        $order->card_name = $request->card_name;
-        $order->card_expiration = $request->card_expiration;
-        $order->card_cvv = $request->card_cvv;
+        $order->user_id = auth()->user()->id;
+        $product = Product::find($request->product_id);
+        $order->products = array(
+            '1' =>  array(
+                'id' => $product->id,
+                'name' => $product->name,
+                'price' => $product->price,
+                'quantity' => 1,
+                'attributes' => array(
+                    'image' => $product->image,
+                ),
+            )
+        );
+        $order->products = json_encode($order->products);
+        $order->shipping_address = $request->houseNumber . ' ' . $request->street. ' ' . $request->brgy . ' ' . $request->city . ' ' . $request->province  . ' ' . $request->country;
+        $order->status = 'pending';
         $order->save();
 
-        return redirect('/order/create')->with('success', 'Order placed successfully!');
+        if ($request->saveInfo) {
+
+            $shippingAddress = new ShippingAddress();
+            $shippingAddress->user_id = auth()->id();
+            $shippingAddress->houseNumber = $request->houseNumber;
+            $shippingAddress->street = $request->street;
+            $shippingAddress->brgy = $request->brgy;
+            $shippingAddress->city = $request->city;
+            $shippingAddress->province = $request->province;
+            $shippingAddress->country = $request->country;
+            $shippingAddress->save();
+        }
+        return redirect()->route('orders.index')->with('success', 'Order has been placed successfully!');
     }
-    public function show($id)
+    public function show(Order $order)
     {
-        $order = Order::find($id);
-        return view('order.show', compact('order'));
+        $order->products = json_decode($order->products);
+        if (auth()->user()->isAdmin) {
+            return view('admin.orders.show', compact('order'));
+        }
+        if (auth()->user()->id == $order->user_id) {
+            return view('orders.show', compact('order'));
+        } else {
+            return redirect()->route('orders.index')->with('error', 'You are not authorized to view this order!');
+        }
     }
-    public function edit($id)
+    public function edit(Order $order)
     {
-        $order = Order::find($id);
         return view('orders.edit', compact('order'));
     }
     public function update(Request $request, $id)
@@ -100,11 +120,9 @@ class OrderController extends Controller
 
         return redirect('/order/' . $id)->with('success', 'Order updated successfully!');
     }
-    public function destroy($id)
+    public function destroy(Order $order)
     {
-        $order = Order::find($id);
         $order->delete();
-
         return redirect('/order')->with('success', 'Order deleted successfully!');
     }
     public function search(Request $request)

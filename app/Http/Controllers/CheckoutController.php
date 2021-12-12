@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Order;
+use App\ShippingAddress;
+use Illuminate\Http\Request;
+
+class CheckoutController extends Controller
+{
+    public function checkout()
+    {
+        $products = \Cart::session(auth()->id())->getContent()->sortBy('id');
+        $shippingFee = 50;
+        $cartSubTotal = \Cart::session(auth()->id())->getSubtotal();
+        $cartFinalTotal = $cartSubTotal + $shippingFee;
+        $shippingAddress = auth()->user()->shipping_addresses->last();
+
+        return view('orders.checkout', compact('products', 'cartSubTotal', 'cartFinalTotal', 'shippingFee', 'shippingAddress'));
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'brgy' => 'required',
+            'city' => 'required',
+            'province' => 'required',
+            'country' => 'required',
+
+        ]);
+        $order = new Order();
+        $order->user_id = auth()->user()->id;
+        $order->products =  \Cart::session(auth()->user()->id)->getContent();
+        $order->products = json_encode($order->products);
+        $order->shipping_address =  $request->houseNumber . ' ' . $request->street . ' ' .$request->brgy . ' ' . $request->city . ' ' . $request->province  . ' ' . $request->country;
+        $order->status = 'pending';
+        $order->save();
+        \Cart::session(auth()->id())->clear();
+
+        if ($request->saveInfo) {
+            $shippingAddress = new ShippingAddress();
+            $shippingAddress->user_id = auth()->id();
+            $shippingAddress->houseNumber = $request->houseNumber;
+            $shippingAddress->street = $request->street;
+            $shippingAddress->brgy = $request->brgy;
+            $shippingAddress->city = $request->city;
+            $shippingAddress->province = $request->province;
+            $shippingAddress->country = $request->country;
+            $shippingAddress->save();
+        }
+        return redirect()->route('orders.index')->with('success', 'Order has been placed successfully!');
+    }
+}

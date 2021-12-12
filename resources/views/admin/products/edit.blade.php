@@ -95,7 +95,7 @@
                             <button type="submit" class="btn btn-primary">Update</button> 
                         </div>
                         <div class="col-12 col-sm-4"> 
-                            <img src="{{asset('/storage/images/products/'.$product->img)}}" class="product-image" id="preview" alt=""> 
+                            <img src="{{asset('/storage/images/products/'.$product->image)}}" class="product-image" id="preview" alt=""> 
                         </div>
                     </div>
                 </div>

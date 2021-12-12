@@ -39,7 +39,6 @@ class CartController extends Controller
             'attributes' => array(
                 'image' => $product->image,
             ),
-            'associatedModel' => $product,
         ));
         // return redirect()->back();
         return redirect(route('carts.index'))->with('success','An item successfully added to cart');

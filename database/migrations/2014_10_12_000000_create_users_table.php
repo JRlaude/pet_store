@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('contact_number')->nullable();
-            $table->string('img')->nullable();
+            $table->string('image')->nullable();
             $table->boolean('isAdmin')->default(0);
             $table->rememberToken();
             $table->timestamps();

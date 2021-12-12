@@ -32,6 +32,11 @@
 
     <!-- Theme Styles -->
     <link href="{{ asset('AdminLTE-3.1.0/dist/css/adminlte.min.css') }}" rel="stylesheet">
+
     @yield('css')
+
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <!-- livewire -->
+    @livewireStyles
 
 </head>

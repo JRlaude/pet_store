@@ -86,7 +86,7 @@
                             <button type="submit" class="btn btn-primary">Update</button>
                         </div>
                         <div class="col-12 col-sm-4">
-                            <img src="{{asset('/storage/images/pets/'.$pet->img)}}" class="w-100" id="preview" alt="">
+                            <img src="{{asset('/storage/images/pets/'.$pet->image)}}" class="w-100" id="preview" alt="">
                         </div>
                     </div>
                 </div>

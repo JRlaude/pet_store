@@ -33,7 +33,7 @@ class ProductController extends Controller
         ]);
         $product = new Product();
         $product->category_id = $this->getCategoryId($request->category);
-        $product->img = $product->saveImage($request->image);
+        $product->image = $product->saveImage($request->image);
         $product->name = $request->name;
         $product->description = $request->description;
         $product->price = $request->price;
@@ -75,8 +75,8 @@ class ProductController extends Controller
         $product->category_id = $this->getCategoryId($request->category);
         $product->quantity = $request->quantity;
         if ($request->hasFile('image')) {
-            $product->deleteImage($product->img);
-            $product->img = $product->saveImage($request->image);
+            $product->deleteImage($product->image);
+            $product->image = $product->saveImage($request->image);
         }
         $product->save();
         return redirect()->route('products.index')->with('success', 'Product updated successfully');
@@ -88,7 +88,7 @@ class ProductController extends Controller
         if ($product->order_details()->count() > 0) {
             return redirect()->route('products.index')->with('error', 'Product has been ordered');
         }
-        $product->deleteImage($product->img);
+        $product->deleteImage($product->image);
         if ($product->delete()) {
             return redirect()->route('products.index')->with('success', 'Product deleted successfully');
         }
@@ -110,14 +110,33 @@ class ProductController extends Controller
     //user controller
     public function getProducts()
     {
+        $categories = Category::all();
         $products = Product::all();
-        return view('products.index', compact('products'));
+        return view('products.index', compact('products', 'categories'));
     }
+    public function getProductByCategory($category_id)
+    {
+        $categories = Category::all();
+        $products = Product::where('category_id', $category_id)->get();
+        return view('products.index', compact('products', 'categories'));
+    }
+
+    public function searchProduct(Request $request)
+    {
+        $categories = Category::all();
+        $search = $request->get('search');
+        dd($search);
+        $products = Product::where('name', 'like', '%' . $search . '%')->get();
+        return view('products.index', compact('products', 'categories'));
+    }
+
     public function getProduct($id)
     {
         $product = Product::find($id);
-        return view('products.show', compact('product'));
+        $products = Product::where('category_id', $product->category_id)->get()->except($product->id);
+        return view('products.show', compact('product', 'products'));
     }
+
 
 
     // public function addToCart(Request $request, $id)
