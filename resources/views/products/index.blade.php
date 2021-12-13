@@ -22,7 +22,7 @@
             <a class="dropdown-item" href="">{{$category->name}}</a>
             @endforeach
         </div>
-        <form action="{{route('searchProduct')}}"  class="md-form md-outline mt-0 d-flex justify-content-between align-items-center">
+        <form  action="{{ route('searchProduct') }}" method="post" class="md-form md-outline mt-0 d-flex justify-content-between align-items-center">
             @csrf
             <input type="text" id="search" name="search" class="form-control mb-0" placeholder="Search...">
             <button title="search" type="submit" class="btn btn-flat"> <i class="fas fa-search "></i> </button>
@@ -33,8 +33,9 @@
         <div class="col-md-3">
             <!-- Section: Sidebar -->
             <section class="mb-5 d-none d-sm-block">
-                <form action="" class="md-form md-outline mt-0 d-flex justify-content-between align-items-center">
-                    <input type="text" id="search12" class="form-control mb-0" placeholder="Search...">
+                <form action="{{route('searchProduct')}}" method="post" class="md-form md-outline mt-0 d-flex justify-content-between align-items-center">
+                    @csrf
+                    <input type="text" id="search" name="search" class="form-control mb-0" placeholder="Search...">
                     <button title="search" type="submit" class="btn btn-flat"> <i class="fas fa-search "></i> </button>
                 </form>
                 <h5 class="my-3">Categories</h5>

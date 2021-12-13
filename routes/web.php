@@ -25,7 +25,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/products', 'ProductController@getProducts')->name('products');
 Route::get('/products/{id}', 'ProductController@getProduct')->name('product');
 Route::get('/products/category/{id}', 'ProductController@getProductByCategory')->name('productByCategory');
-Route::get('/products/search', 'ProductController@search')->name('searchProduct');
+Route::post('/search/product', 'ProductController@searchProduct')->name('searchProduct');
 
 
 Route::get('/pets', 'PetController@getPets')->name('pets');

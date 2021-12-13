@@ -36,7 +36,5 @@
     @yield('css')
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <!-- livewire -->
-    @livewireStyles
 
 </head>

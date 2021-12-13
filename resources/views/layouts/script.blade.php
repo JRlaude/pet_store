@@ -12,6 +12,3 @@
 <script src="{{ asset('AdminLTE-3.1.0/dist/js/adminlte.min.js') }}"></script>
 
 @yield('js')
-
-<!-- livewire -->
-@livewireScripts
