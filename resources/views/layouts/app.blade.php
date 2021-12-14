@@ -8,7 +8,7 @@
         <nav class="navbar navbar-expand-md navbar-white navbar-light sticky-top shadow-sm" >
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="greenlogo.png" width="35" alt="">
+                    <img src="/greenlogo.png" width="35" alt="">
                     <span class="h4 align-middle"> {{ config('app.name', 'Pet Store') }}</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -25,10 +25,10 @@
                     <!-- Right Side Of Navbar -->
                     @include('layouts.navbar.right-side')
                 </div>
-            </div>            
+            </div>
         </nav>
 
-        
+
         <main class="py-4">
             @yield('content')
         </main>

@@ -18,11 +18,13 @@
             Categories
         </a>
         <div class="dropdown-menu">
-            @foreach($categories as $category)
+            @forelse($categories as $category)
             <a class="dropdown-item" href="">{{$category->name}}</a>
-            @endforeach
+            @empty
+            <a class="dropdown-item" href="">No Category</a>
+            @endforelse
         </div>
-        <form  action="{{ route('searchProduct') }}" method="post" class="md-form md-outline mt-0 d-flex justify-content-between align-items-center">
+        <form action="{{ route('searchProduct') }}" method="post" class="md-form md-outline mt-0 d-flex justify-content-between align-items-center">
             @csrf
             <input type="text" id="search" name="search" class="form-control mb-0" placeholder="Search...">
             <button title="search" type="submit" class="btn btn-flat"> <i class="fas fa-search "></i> </button>
@@ -40,16 +42,18 @@
                 </form>
                 <h5 class="my-3">Categories</h5>
                 <div class="text-muted small text-uppercase">
-                    @foreach($categories as $category)
+                    @forelse($categories as $category)
                     <p class="mb-3"><a href="{{route('productByCategory' , $category->id)}}" class="card-link-secondary">{{$category->name}}</a></p>
-                    @endforeach
+                    @empty
+                    <p class="mb-3">No Category</p>
+                    @endforelse
                 </div>
             </section>
         </div>
         <!-- Products -->
         <div class="col-md-9">
             <section class="row">
-                @foreach($products as $product)
+                @forelse($products as $product)
                 <div class="col-lg-3 col-md-4 col-6 mb-2 mb-lg-0">
                     <div class="card">
                         <a href="{{ route('product', $product->id) }}"> <img src="{{ asset('storage/images/products/'.$product->image) }}" class="card-img-top" alt="..."> </a>
@@ -69,7 +73,13 @@
                         </div> -->
                     </div>
                 </div>
-                @endforeach
+                @empty
+                <div class="col-12">
+                    <div class="alert alert-info">
+                        <h5 class="text-center">No products found</h5>
+                    </div>
+                </div>
+                @endforelse
             </section>
         </div>
     </div>

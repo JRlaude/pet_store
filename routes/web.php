@@ -40,6 +40,7 @@ Route::get('{user}/profile', 'UserController@profile')->name('profile');
 Route::resource('/carts', 'CartController');
 Route::resource('/orders', 'OrderController');
 Route::get('/buynow/{product}', 'OrderController@buynow')->name('buynow');
+Route::get('/cancel', 'OrderController@cancelOrder')->name('orders.cancel');
 
 Route::get('/checkout', 'CheckoutController@checkout')->name('checkout');
 Route::post('/checkout', 'CheckoutController@store')->name('checkout');

@@ -18,13 +18,16 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->json('products');
+            $table->float('subTotal', 8, 2);
+            $table->float('shippingFee', 8, 2);
             $table->float('total', 8, 2);
             $table->string('shipping_address');
-            $table->string('payment_method');
+            $table->string('status')->default('pending');
+            $table->string('payment_method')->default('COD');
+            $table->string('payment_status')->default('unpaid');
             $table->dateTime('packing_time', 0)->nullable();
             $table->dateTime('delivery_time', 0)->nullable();
             $table->dateTime('arrival_time', 0)->nullable();
-            $table->string('status');
             $table->timestamps();
         });
     }

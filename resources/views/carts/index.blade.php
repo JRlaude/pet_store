@@ -69,11 +69,11 @@
               @endforelse
             </tbody>
           </table>
-
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+  @if(count($products) > 0)
+  <div class="col-md-4">
       <div class="card">
         <div class="card-header">
           <h3>Cart Summary</h3>
@@ -99,6 +99,7 @@
         </div>
       </div>
     </div>
+  @endif
   </div>
 </div>
 @endsection

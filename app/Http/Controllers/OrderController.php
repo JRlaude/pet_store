@@ -15,11 +15,18 @@ class OrderController extends Controller
     }
     public function index()
     {
+
         if (auth()->user()->isAdmin) {
             $orders = Order::all();
+            foreach ($orders as $order) {
+                $order->products = json_decode($order->products);
+            }
             return view('admin.orders.index', compact('orders'));
         } else {
             $orders = auth()->user()->orders;
+            foreach ($orders as $order) {
+                $order->products = json_decode($order->products);
+            }
             return view('orders.index', compact('orders'));
         }
     }
@@ -54,12 +61,14 @@ class OrderController extends Controller
             )
         );
         $order->products = json_encode($order->products);
-        $order->shipping_address = $request->houseNumber . ' ' . $request->street. ' ' . $request->brgy . ' ' . $request->city . ' ' . $request->province  . ' ' . $request->country;
-        $order->status = 'pending';
+        $order->shipping_address = $request->houseNumber . ' ' . $request->street . ' ' . $request->brgy . ' ' . $request->city . ' ' . $request->province  . ' ' . $request->country;
+        $order->subTotal = $product->price;
+        $shippingFee = 50;
+        $order->shippingFee = $shippingFee;
+        $order->total = $product->price + $shippingFee;
         $order->save();
 
         if ($request->saveInfo) {
-
             $shippingAddress = new ShippingAddress();
             $shippingAddress->user_id = auth()->id();
             $shippingAddress->houseNumber = $request->houseNumber;
@@ -84,6 +93,22 @@ class OrderController extends Controller
             return redirect()->route('orders.index')->with('error', 'You are not authorized to view this order!');
         }
     }
+
+    public function cancelOrder(Order $order)
+    {
+        if (auth()->user()->id == $order->user_id) {
+            if ($order->status == 'pending') {
+                $order->status = 'cancelled';
+                $order->save();
+                return redirect()->route('orders.index')->with('success', 'Order has been cancelled successfully!');
+            } else {
+                return redirect()->route('orders.index')->with('error', 'You cannot cancel this order!');
+            }
+        } else {
+            return redirect()->route('orders.index')->with('error', 'You are not authorized to cancel this order!');
+        }
+    }
+
     public function edit(Order $order)
     {
         return view('orders.edit', compact('order'));
@@ -129,43 +154,6 @@ class OrderController extends Controller
     {
         $search = $request->get('search');
         $orders = Order::where('name', 'like', '%' . $search . '%')->paginate(5);
-        return view('order.index', compact('orders'));
-    }
-    public function searchByDate(Request $request)
-    {
-        $search = $request->get('search');
-        $orders = Order::where('created_at', 'like', '%' . $search . '%')->paginate(5);
-        return view('order.index', compact('orders'));
-    }
-    public function searchByEmail(Request $request)
-    {
-        $search = $request->get('search');
-        $orders = Order::where('email', 'like', '%' . $search . '%')->paginate(5);
-        return view('order.index', compact('orders'));
-    }
-
-    public function searchByAddress(Request $request)
-    {
-        $search = $request->get('search');
-        $orders = Order::where('address', 'like', '%' . $search . '%')->paginate(5);
-        return view('order.index', compact('orders'));
-    }
-    public function searchByCity(Request $request)
-    {
-        $search = $request->get('search');
-        $orders = Order::where('city', 'like', '%' . $search . '%')->paginate(5);
-        return view('order.index', compact('orders'));
-    }
-    public function searchByState(Request $request)
-    {
-        $search = $request->get('search');
-        $orders = Order::where('state', 'like', '%' . $search . '%')->paginate(5);
-        return view('order.index', compact('orders'));
-    }
-    public function searchByZip(Request $request)
-    {
-        $search = $request->get('search');
-        $orders = Order::where('zip', 'like', '%' . $search . '%')->paginate(5);
         return view('order.index', compact('orders'));
     }
 }
